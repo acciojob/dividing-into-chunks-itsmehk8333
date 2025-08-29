@@ -1,23 +1,30 @@
 const arr = [1, 2, 3, 4, 1, 0, 2, 2];
 
 const divide = (arr, n) => {
-	  var arr1 = [];
-    for(var i = 0; i < arr.length; i++){
-        let tempArr = []
-        let sum = 0
-        for(var j = i; j < arr.length; j++){
-            sum = sum + arr[j];
-            tempArr.push(arr[j]);    // build subarray
-            if(sum < value){
-                arr1.push([...tempArr]); // ✅ push each valid subarray
-            }
-            else{
-                break;
-            }
+	  let result = [];
+    let currentChunk = [];
+    let currentSum = 0;
+
+    for (let num of arr) {
+        if (currentSum + num <= n) {
+            // add to current chunk
+            currentChunk.push(num);
+            currentSum += num;
+        } else {
+            // push current chunk to result
+            result.push(currentChunk);
+            // start new chunk
+            currentChunk = [num];
+            currentSum = num;
         }
     }
-    console.log(arr1)
-		   return arr1
+
+    // push the last chunk if not empty
+    if (currentChunk.length > 0) {
+        result.push(currentChunk);
+    }
+
+    return result;
   // Write your code here
 };
 
